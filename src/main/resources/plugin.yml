@@ -1,0 +1,17 @@
+name: HundredDaysBedrockWalk
+version: '${project.version}'
+main: dev.sasukector.hundreddaysbase.HundredDaysBedrockWalk
+api-version: 1.17
+authors: [ Sasukector ]
+description: This is the core plugin for HundredDaysBedrockWalk
+website: https://sasukector.dev
+commands:
+  points:
+    description: Command to manage points
+    usage: /points [option] [subOption]
+  played:
+    description: Command to see played time of a player
+    usage: /played [playerName]
+  toggleDays:
+    description: Command to toggle days display
+    usage: /toggleDays
