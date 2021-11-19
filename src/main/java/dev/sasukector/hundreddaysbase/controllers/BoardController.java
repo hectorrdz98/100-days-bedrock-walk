@@ -6,11 +6,9 @@ import dev.sasukector.hundreddaysbase.helpers.ServerUtilities;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
@@ -53,20 +51,6 @@ public class BoardController {
 
             List<String> lines = new ArrayList<>();
             lines.add("");
-            lines.add("Jugador: §6" + player.getName());
-
-            Team playerTeam = player.getScoreboard().getEntryTeam(player.getName());
-            String prefix = ChatColor.GRAY + "§7";
-            if (playerTeam != null) {
-                switch (playerTeam.getName()) {
-                    case "master" -> prefix = ChatColor.AQUA +  "♔ ";
-                    case "walker" -> prefix = ChatColor.DARK_RED +  "♫ ";
-                    case "runner" -> prefix = ChatColor.DARK_GREEN +  "★ ";
-                    case "addict" -> prefix = ChatColor.DARK_BLUE +  "✿ ";
-                    case "godlike" -> prefix = ChatColor.DARK_PURPLE +  "∞ ";
-                }
-            }
-            lines.add(prefix + PointsController.getInstance().getPlayerPoint(player) + " puntos");
 
             World overworld = ServerUtilities.getOverworld();
             if (overworld != null && !hideDays) {
@@ -74,12 +58,10 @@ public class BoardController {
             }
 
             double hours = player.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20.0/ 60.0 / 60.0;
-            lines.add("Tiempo jugado: §d" + String.format("%.2f", hours) + " h");
+            lines.add("Jugado: §d" + String.format("%.2f", hours) + " h");
 
             lines.add("");
             lines.add("Online: §6" + Bukkit.getOnlinePlayers().size());
-            lines.add("Total bedrock: §6" + PointsController.getInstance().getTotalPoints());
-            lines.add("TPS: §6" + String.format("%.2f", Bukkit.getTPS()[0]));
             lines.add("");
 
             board.updateLines(lines);

@@ -1,10 +1,12 @@
 package dev.sasukector.hundreddaysbase;
 
 import dev.sasukector.hundreddaysbase.commands.PointsCommand;
+import dev.sasukector.hundreddaysbase.commands.TPSCommand;
 import dev.sasukector.hundreddaysbase.commands.ToggleDaysCommand;
 import dev.sasukector.hundreddaysbase.commands.PlayedCommand;
 import dev.sasukector.hundreddaysbase.controllers.BoardController;
 import dev.sasukector.hundreddaysbase.controllers.PointsController;
+import dev.sasukector.hundreddaysbase.controllers.TeamsController;
 import dev.sasukector.hundreddaysbase.events.SpawnEvents;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -28,12 +30,14 @@ public final class HundredDaysBedrockWalk extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(player -> BoardController.getInstance().newPlayerBoard(player));
 
         // Register commands
+        Objects.requireNonNull(HundredDaysBedrockWalk.getInstance().getCommand("conter-tps")).setExecutor(new TPSCommand());
         Objects.requireNonNull(HundredDaysBedrockWalk.getInstance().getCommand("points")).setExecutor(new PointsCommand());
         Objects.requireNonNull(HundredDaysBedrockWalk.getInstance().getCommand("played")).setExecutor(new PlayedCommand());
         Objects.requireNonNull(HundredDaysBedrockWalk.getInstance().getCommand("toggleDays")).setExecutor(new ToggleDaysCommand());
 
         // Load points
         PointsController.getInstance().loadPointsFromFile();
+        TeamsController.getInstance();
     }
 
     @Override

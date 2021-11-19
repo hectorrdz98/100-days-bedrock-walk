@@ -15,3 +15,6 @@ commands:
   toggleDays:
     description: Command to toggle days display
     usage: /toggleDays
+  conter-tps:
+    description: Command to display tps
+    usage: /tps

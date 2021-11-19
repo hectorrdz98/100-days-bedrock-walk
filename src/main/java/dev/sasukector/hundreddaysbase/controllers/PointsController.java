@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.sasukector.hundreddaysbase.HundredDaysBedrockWalk;
-import dev.sasukector.hundreddaysbase.helpers.ServerUtilities;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -40,14 +37,6 @@ public class PointsController {
         return this.playerPoints.values().stream().mapToInt(Integer::valueOf).sum();
     }
 
-    private LinkedHashMap<UUID, Integer> getSortedPlayerPoints() {
-        return this.playerPoints.entrySet().stream()
-            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-            .collect(Collectors.toMap(
-                Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new
-            ));
-    }
-
     public int getPlayerPoint(Player player) {
         if (!this.playerPoints.containsKey(player.getUniqueId())) {
             this.playerPoints.put(player.getUniqueId(), 0);
@@ -55,55 +44,10 @@ public class PointsController {
         return this.playerPoints.get(player.getUniqueId());
     }
 
-    public int getPlayerPosition(Player player) {
-        int position = 1;
-        LinkedHashMap<UUID, Integer> sortedPoints = getSortedPlayerPoints();
-        for (Map.Entry<UUID, Integer> entry : sortedPoints.entrySet()) {
-            if (entry.getKey().equals(player.getUniqueId())) {
-                break;
-            }
-            position++;
-        }
-        return position;
-    }
-
     public void addPointsToPlayer(Player player, int points) {
         int playerPoints = this.getPlayerPoint(player);
         int newPoints = playerPoints + points;
         this.playerPoints.put(player.getUniqueId(), newPoints);
-        player.sendActionBar(Component.text("+1", TextColor.color(0x0091AD)));
-
-        if (!TeamsController.getInstance().isMaster(player)) {
-            String rankUp = "";
-            if (newPoints >= 1000 && newPoints < 5000) {
-                TeamsController.getInstance().getWalkerTeam().addEntry(player.getName());
-                if (newPoints == 1000) {
-                    rankUp = "<color:#AA0000>WALKER</color>";
-                }
-            } else if (newPoints >= 10000 && newPoints < 100000) {
-                TeamsController.getInstance().getRunnerTeam().addEntry(player.getName());
-                if (newPoints == 10000) {
-                    rankUp = "<color:#00AA00>RUNNER</color>";
-                }
-            } else if (newPoints >= 100000 && newPoints < 1000000) {
-                TeamsController.getInstance().getAddictTeam().addEntry(player.getName());
-                if (newPoints == 100000) {
-                    rankUp = "<color:#00AAAA>ADDICT</color>";
-                }
-            } else if (newPoints >= 1000000) {
-                TeamsController.getInstance().getGodlikeTeam().addEntry(player.getName());
-                if (newPoints == 1000000) {
-                    rankUp = "<color:#AA00AA>GODLIKE</color>";
-                }
-            }
-            if (!rankUp.equals("")) {
-                ServerUtilities.playBroadcastSound("minecraft:entity.wither.death",  1f, 1.4f);
-                ServerUtilities.sendBroadcastMessage(ServerUtilities.getMiniMessage().parse(
-                        "<bold><color:#0091AD>" + player.getName() +
-                                "</color></bold> pasó a rango " + rankUp
-                ));
-            }
-        }
     }
 
     public LinkedHashMap<UUID, Integer> getTop5() {

@@ -4,12 +4,8 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeamsController {
 
@@ -69,21 +65,6 @@ public class TeamsController {
             godlikeTeam.color(NamedTextColor.DARK_PURPLE);
             godlikeTeam.prefix(Component.text("∞ "));
         }
-    }
-
-    public List<Player> getMasters() {
-        List<Player> players = new ArrayList<>();
-        this.masterTeam.getEntries().forEach(entry -> {
-            Player player = Bukkit.getPlayer(entry);
-            if (player != null) {
-                players.add(player);
-            }
-        });
-        return players;
-    }
-
-    public boolean isMaster(Player player) {
-        return this.getMasters().contains(player);
     }
 
 }

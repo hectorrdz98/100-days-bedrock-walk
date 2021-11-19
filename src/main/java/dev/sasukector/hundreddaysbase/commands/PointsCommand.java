@@ -20,14 +20,18 @@ public class PointsCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player player) {
-            if (args.length == 0) {
-              ServerUtilities.sendServerMessage(player, "Tienes " + PointsController.getInstance().getPlayerPoint(player) +
-                      " puntos, estás en la posición #" + PointsController.getInstance().getPlayerPosition(player));
-            } else {
+        if (sender instanceof Player player && player.isOp()) {
+            if (args.length > 0) {
                 String option = args[0];
                 if (validOptions(player).contains(option)) {
                     switch (option) {
+                        case "total" -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.bell", 1, 1);
+                            ServerUtilities.sendServerMessage(player, ServerUtilities.getMiniMessage().parse(
+                                    "<color:#B5179E>Total de puntos:</color> <bold><color:#F72585>" +
+                                            PointsController.getInstance().getTotalPoints() + "</color></bold>"
+                            ));
+                        }
                         case "top" -> {
                             LinkedHashMap<UUID, Integer> top5 = PointsController.getInstance().getTop5();
                             player.playSound(player.getLocation(), "minecraft:block.note_block.bell", 1, 1);
@@ -134,9 +138,10 @@ public class PointsCommand implements CommandExecutor, TabExecutor {
             valid.add("load");
             valid.add("save");
             valid.add("add");
+            valid.add("total");
+            valid.add("top");
+            valid.add("topnt");
         }
-        valid.add("top");
-        valid.add("topnt");
         Collections.sort(valid);
         return valid;
     }
