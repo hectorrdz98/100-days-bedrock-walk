@@ -25,6 +25,8 @@ public class SpawnEvents implements Listener {
         blackListMaterials.add(Material.WATER);
         blackListMaterials.add(Material.LAVA);
         blackListMaterials.add(Material.AIR);
+        blackListMaterials.add(Material.VOID_AIR);
+        blackListMaterials.add(Material.CAVE_AIR);
         blackListMaterials.add(Material.BARRIER);
         blackListMaterials.add(Material.VOID_AIR);
         blackListMaterials.add(Material.NETHER_PORTAL);
