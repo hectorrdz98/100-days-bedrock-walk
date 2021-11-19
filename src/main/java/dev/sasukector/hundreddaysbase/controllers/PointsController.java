@@ -80,19 +80,19 @@ public class PointsController {
                 if (newPoints == 1000) {
                     rankUp = "<color:#AA0000>WALKER</color>";
                 }
-            } else if (newPoints >= 5000 && newPoints < 10000) {
+            } else if (newPoints >= 10000 && newPoints < 100000) {
                 TeamsController.getInstance().getRunnerTeam().addEntry(player.getName());
-                if (newPoints == 5000) {
+                if (newPoints == 10000) {
                     rankUp = "<color:#00AA00>RUNNER</color>";
                 }
-            } else if (newPoints >= 10000 && newPoints < 100000) {
+            } else if (newPoints >= 100000 && newPoints < 1000000) {
                 TeamsController.getInstance().getAddictTeam().addEntry(player.getName());
-                if (newPoints == 10000) {
+                if (newPoints == 100000) {
                     rankUp = "<color:#00AAAA>ADDICT</color>";
                 }
-            } else if (newPoints >= 100000) {
+            } else if (newPoints >= 1000000) {
                 TeamsController.getInstance().getGodlikeTeam().addEntry(player.getName());
-                if (newPoints == 100000) {
+                if (newPoints == 1000000) {
                     rankUp = "<color:#AA00AA>GODLIKE</color>";
                 }
             }
